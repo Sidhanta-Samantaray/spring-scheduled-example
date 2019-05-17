@@ -2,6 +2,7 @@ package com.iamsid.geek.vibes.springschedule.controller;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ScheduledFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -43,5 +44,17 @@ public class AppController {
 			@RequestParam(required = false, defaultValue = "-1") Long fixedDelayValue) throws NoSuchMethodException {
 		this.applicationService.startSchedule(taskName, initialDelayValue, fixedDelayValue);
 		return ImmutableMap.of("message","Task Started");
+	}
+	
+	@GetMapping(value="/start/all",produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public @ResponseBody Map<String, ScheduledFuture<?>> startAllTask(){
+		return this.applicationService.startAll();
+		
+	}
+	
+	@GetMapping(value="/stop/all",produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public @ResponseBody Map<String, ScheduledFuture<?>> stopAllTask(){
+		return this.applicationService.stopAll();
+		
 	}
 }
